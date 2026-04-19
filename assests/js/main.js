@@ -1,6 +1,8 @@
 // Sayfa Yüklendiğinde Fonksiyonları Çalıştır
 document.addEventListener('DOMContentLoaded', () => {
     initProjectFilter();
+    initProjectSlider();
+    initThemeToggle();
 });
 
 // Projeleri Kategorilere Göre Filtreleme (Gelişmiş)
@@ -36,6 +38,82 @@ const initProjectFilter = () => {
         });
     });
 }
+
+// Proje Slider Fonksiyonu
+const initProjectSlider = () => {
+    const slider = document.querySelector('.slider-wrapper');
+    if (!slider) return;
+
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    const dots = document.querySelectorAll('.dot');
+
+    let currentSlide = 0;
+
+    const updateSlider = () => {
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        // Dot'ları güncelle
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    };
+
+    const nextSlide = () => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateSlider();
+    };
+
+    const prevSlide = () => {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        updateSlider();
+    };
+
+    // Event listeners
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+    // Dot'lara tıklama
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentSlide = index;
+            updateSlider();
+        });
+    });
+
+    // Otomatik geçiş (isteğe bağlı - 5 saniyede bir)
+    setInterval(nextSlide, 5000);
+};
+
+// Dark/Light Mode Toggle
+const initThemeToggle = () => {
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (!themeToggle) return;
+
+    // Kayıtlı tema tercihini kontrol et
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+        themeToggle.innerHTML = '🌙';
+    } else {
+        themeToggle.innerHTML = '☀️';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        
+        // Tema durumunu kaydet
+        if (document.body.classList.contains('light-mode')) {
+            localStorage.setItem('theme', 'light');
+            themeToggle.innerHTML = '🌙';
+        } else {
+            localStorage.setItem('theme', 'dark');
+            themeToggle.innerHTML = '☀️';
+        }
+    });
+};
+
 // İletişim Formu Gönderim İşlemi (Toast Bildirimi)
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.querySelector('.contact-form');

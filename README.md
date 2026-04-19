@@ -9,7 +9,8 @@
 ---
 
 ## 🚀 Proje Hakkında
-Tasarımda modern web trendlerinden biri olan **Glassmorphism (Cam Efekti)** kullanılmış olup, arayüz derinlikli, karanlık tema ve neon detaylarla desteklenmiştir. 
+Tasarımda modern web trendlerinden biri olan **Glassmorphism (Cam Efekti)** kullanılmış olup, arayüz derinlikli, karanlık tema ve neon detaylarla desteklenmiştir.
+Slider,Filtreleme gibi özelliklere sahiptir.
 
 Amacım, kodlamadaki analitik mantığı, yaratıcı tasarımlarla birleştirerek kullanıcılara akıcı bir dijital deneyim sunmaktır.
 

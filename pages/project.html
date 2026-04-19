@@ -10,13 +10,14 @@
 <body>
     <header>
         <nav>
-            
             <ul class="nav-links">
                 <li><a href="index.html">Ana Sayfa</a></li>
                 <li><a href="about.html">Hakkımda</a></li>
                 <li><a href="project.html">Projeler</a></li>
                 <li><a href="contact.html">İletişim</a></li>
             </ul>
+
+            <button class="theme-toggle" aria-label="Tema Değiştir">☀️</button>
 
             <button class="nav-menu-btn" aria-label="Menü">
                 <span></span><span></span><span></span>
@@ -33,6 +34,61 @@
 
     <main class="container">
         <h2 class="section-title">Çalışmalarım</h2>
+
+        <!-- Proje Slider -->
+        <div class="project-slider-container">
+            <div class="project-slider glass">
+                <div class="slider-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="slide">
+                        <div class="slide-image animate-bg"></div>
+                        <div class="slide-content">
+                            <h3>Karakter Animasyonu</h3>
+                            <p>Adobe Animate ile hazırlanmış profesyonel 2D karakter yürüme döngüsü animasyonu. Frame-by-frame tekniği kullanılarak akıcı ve gerçekçi hareket elde edildi.</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="slide">
+                        <div class="slide-image canva-bg"></div>
+                        <div class="slide-content">
+                            <h3>Espor Turnuva Afişi</h3>
+                            <p>Canva'da tasarlanmış detaylı turnuva duyuru posteri. Modern tipografi ve dinamik kompozisyon ile dikkat çekici bir tasarım oluşturuldu.</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="slide">
+                        <div class="slide-image logo-bg"></div>
+                        <div class="slide-content">
+                            <h3>Marka Logosu</h3>
+                            <p>Modern minimalist vektörel logo tasarımı. Temiz çizgiler ve anlamlı semboller kullanarak unutulmaz bir marka kimliği yaratıldı.</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4 -->
+                    <div class="slide">
+                        <div class="slide-image video-bg"></div>
+                        <div class="slide-content">
+                            <h3>Tanıtım Jeneriği</h3>
+                            <p>Canva video editörü kullanılarak hazırlanan kısa intro. Hareketli grafikler ve müzik senkronizasyonu ile profesyonel bir açılış hazırlandı.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slider-controls">
+                    <button class="slider-btn slider-prev">←</button>
+                    <button class="slider-btn slider-next">→</button>
+                </div>
+
+                <div class="slider-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
         
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">Tümü</button>
