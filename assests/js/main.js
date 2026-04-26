@@ -114,7 +114,7 @@ const initThemeToggle = () => {
     });
 };
 
-// İletişim Formu Gönderim İşlemi (Toast Bildirimi)
+// İletişim Formu Gönderim İşlemi (Toast Bildirimi + PHP)
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.querySelector('.contact-form');
     
@@ -122,44 +122,68 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault(); // Formun sayfayı yenilemesini engeller
 
-            // Mesaj kutusunu (div) oluştur
-            const toast = document.createElement('div');
-            toast.classList.add('toast-notification');
-            
-            // İçeriğini ekle
-            toast.innerHTML = `
-                <div class="toast-icon">✓</div>
-                <div class="toast-content">
-                    <h4>Başarılı!</h4>
-                    <p>Mesajınız bana ulaştı, en kısa sürede dönüş yapacağım.</p>
-                </div>
-            `;
+            // Butonu "Gönderiliyor..." yap
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = 'Gönderiliyor...';
+            submitBtn.disabled = true;
 
-            // Sayfaya ekle
-            document.body.appendChild(toast);
+            // Formdaki verileri topla
+            const formData = new FormData(contactForm);
 
-            // Animasyonu tetiklemek için çok küçük bir gecikme
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 10);
-
-            // Form içindeki yazıları temizle
-            contactForm.reset();
-
-            // 4 saniye sonra bildirimi ekrandan kaldır
-            setTimeout(() => {
-                toast.classList.remove('show');
-                
-                // CSS animasyonu bittikten sonra elementi DOM'dan tamamen sil
-                setTimeout(() => {
-                    toast.remove();
-                }, 500);
-            }, 4000);
+            // Verileri PHP dosyasına yolla (PHP dosyası ana dizinde olduğu için ../gonder.php)
+            fetch('../gonder.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showToast('Başarılı!', 'Mesajınız bana ulaştı, en kısa sürede dönüş yapacağım.', 'success');
+                    contactForm.reset(); 
+                } else {
+                    showToast('Hata!', data.message || 'Bir sorun oluştu.', 'error');
+                }
+            })
+            .catch(error => {
+                showToast('Bağlantı Hatası!', 'Lütfen internet bağlantınızı kontrol edin.', 'error');
+            })
+            .finally(() => {
+                // İşlem bitince butonu eski haline getir
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            });
         });
+    }
+
+    // Bildirimi ekranda gösteren fonksiyon
+    function showToast(title, message, type) {
+        const toast = document.createElement('div');
+        toast.classList.add('toast-notification');
+        
+        const icon = type === 'success' ? '✓' : '✕';
+        const iconColor = type === 'success' ? 'var(--primary-color)' : '#ff4d4d';
+        
+        toast.innerHTML = `
+            <div class="toast-icon" style="color: ${iconColor}">${icon}</div>
+            <div class="toast-content">
+                <h4 style="color: ${iconColor}">${title}</h4>
+                <p>${message}</p>
+            </div>
+        `;
+
+        document.body.appendChild(toast);
+
+        setTimeout(() => { toast.classList.add('show'); }, 10);
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => { toast.remove(); }, 500);
+        }, 4000);
     }
 });
 
-
+// Mobil Menü İşlemleri
 document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.querySelector('.nav-menu-btn');
     const mobileNav = document.querySelector('.mobile-nav');
