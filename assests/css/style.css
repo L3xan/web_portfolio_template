@@ -784,3 +784,16 @@ body.light-mode .mobile-nav {
         font-size: 0.95rem;
     }
 }
+
+/* Favori Butonu Stili */
+.fav-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform var(--transition-speed);
+}
+
+.fav-btn:hover {
+    transform: scale(1.2);
+}
