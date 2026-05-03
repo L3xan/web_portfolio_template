@@ -1,5 +1,6 @@
 // Sayfa Yüklendiğinde Fonksiyonları Çalıştır
 document.addEventListener('DOMContentLoaded', () => {
+    initDynamicProjects();
     initProjectFilter();
     initProjectSlider();
     initThemeToggle();
@@ -224,3 +225,75 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Projeleri JSON'dan Çekme ve Favori Mantığı
+const initDynamicProjects = async () => {
+    const grid = document.getElementById('dynamic-project-grid');
+    if (!grid) return; // Eğer proje grid'i yoksa çalışmasın
+
+    try {
+        // 1. JSON dosyasından veriyi oku
+        const response = await fetch('../data.json'); 
+        const projects = await response.json();
+        
+        // 2. LocalStorage'dan favorileri al (Yoksa boş dizi oluştur)
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+        // Ekrana projeleri basan fonksiyon
+        const renderProjects = () => {
+            grid.innerHTML = ''; // Önce grid'i temizle
+            
+            projects.forEach(project => {
+                // Bu proje favorilerde var mı kontrol et
+                const isFavorited = favorites.includes(project.id);
+                const heartIcon = isFavorited ? '❤️' : '🤍';
+                
+                // Kart elementini oluştur
+                const card = document.createElement('div');
+                card.className = `project-card glass ${project.category}`;
+                card.setAttribute('data-category', project.category);
+                
+                card.innerHTML = `
+                    <div class="project-img ${project.bgClass}"></div>
+                    <div class="project-info">
+                        <div class="project-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>${project.title}</h3>
+                            <button class="fav-btn" data-id="${project.id}" aria-label="Favorilere Ekle">
+                                ${heartIcon}
+                            </button>
+                        </div>
+                        <p>${project.description}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // 3. Kalp butonlarına tıklama (Kullanıcı Etkileşimi ve LocalStorage)
+            document.querySelectorAll('.fav-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const projectId = parseInt(btn.getAttribute('data-id'));
+                    
+                    if (favorites.includes(projectId)) {
+                        // Eğer zaten favoriyse, favorilerden çıkar
+                        favorites = favorites.filter(id => id !== projectId);
+                    } else {
+                        // Değilse favorilere ekle
+                        favorites.push(projectId);
+                    }
+                    
+                    // LocalStorage'ı güncelle (Veri Saklama Mantığı)
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    
+                    // Ekrandaki kalpleri güncellemek için yeniden render et
+                    renderProjects();
+                });
+            });
+        };
+
+        renderProjects(); // İlk render'ı tetikle
+
+    } catch (error) {
+        console.error("Projeler yüklenirken bir hata oluştu:", error);
+        grid.innerHTML = '<p>Projeler yüklenemedi. Lütfen bağlantınızı kontrol edin.</p>';
+    }
+};
