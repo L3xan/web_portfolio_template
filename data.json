@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "category": "animate",
+        "bgClass": "animate-bg",
+        "title": "Karakter Animasyonu",
+        "description": "Adobe Animate ile hazırlanmış 2D karakter yürüme döngüsü animasyonu."
+    },
+    {
+        "id": 2,
+        "category": "canva",
+        "bgClass": "canva-bg",
+        "title": "Espor Turnuva Afişi",
+        "description": "Canva'da tasarlanmış detaylı turnuva duyuru posteri."
+    },
+    {
+        "id": 3,
+        "category": "canva",
+        "bgClass": "logo-bg",
+        "title": "Marka Logosu",
+        "description": "Modern minimalist vektörel logo tasarımı."
+    },
+    {
+        "id": 4,
+        "category": "video",
+        "bgClass": "video-bg",
+        "title": "Tanıtım Jeneriği",
+        "description": "Canva video editörü kullanılarak hazırlanan kısa introm."
+    }
+]
