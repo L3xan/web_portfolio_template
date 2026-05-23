@@ -4,23 +4,22 @@ document.addEventListener('DOMContentLoaded', () => {
     initProjectFilter();
     initProjectSlider();
     initThemeToggle();
+    initSearch();
 });
 
-// Projeleri Kategorilere Göre Filtreleme (Gelişmiş)
+// Projeleri Kategorilere Göre Filtreleme
 const initProjectFilter = () => {
     const filterBtns = document.querySelectorAll('.filter-btn');
-    const projectCards = document.querySelectorAll('.project-card');
-
+    
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Aktif buton stilini değiştir
+            const projectCards = document.querySelectorAll('.project-card');
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             const filterValue = btn.getAttribute('data-filter');
 
             projectCards.forEach(card => {
-                // Akıcı geçiş efekti
                 card.style.opacity = '0';
                 card.style.transform = 'scale(0.8)';
                 
@@ -34,7 +33,7 @@ const initProjectFilter = () => {
                     } else {
                         card.style.display = 'none';
                     }
-                }, 400); // Animasyon süresi
+                }, 400); 
             });
         });
     });
@@ -54,8 +53,6 @@ const initProjectSlider = () => {
 
     const updateSlider = () => {
         slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-        
-        // Dot'ları güncelle
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === currentSlide);
         });
@@ -71,11 +68,9 @@ const initProjectSlider = () => {
         updateSlider();
     };
 
-    // Event listeners
     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
 
-    // Dot'lara tıklama
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
             currentSlide = index;
@@ -83,16 +78,14 @@ const initProjectSlider = () => {
         });
     });
 
-    // Otomatik geçiş (isteğe bağlı - 5 saniyede bir)
     setInterval(nextSlide, 5000);
 };
 
-// Dark/Light Mode Toggle
+// Dark/Light Mode Toggle (YENİ SİSTEME GÖRE DÜZENLENDİ)
 const initThemeToggle = () => {
     const themeToggle = document.querySelector('.theme-toggle');
     if (!themeToggle) return;
 
-    // Kayıtlı tema tercihini kontrol et
     const savedTheme = localStorage.getItem('theme') || 'dark';
     if (savedTheme === 'light') {
         document.body.classList.add('light-mode');
@@ -103,8 +96,6 @@ const initThemeToggle = () => {
 
     themeToggle.addEventListener('click', () => {
         document.body.classList.toggle('light-mode');
-        
-        // Tema durumunu kaydet
         if (document.body.classList.contains('light-mode')) {
             localStorage.setItem('theme', 'light');
             themeToggle.innerHTML = '🌙';
@@ -121,18 +112,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Formun sayfayı yenilemesini engeller
+            e.preventDefault(); 
 
-            // Butonu "Gönderiliyor..." yap
             const submitBtn = contactForm.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerText;
             submitBtn.innerText = 'Gönderiliyor...';
             submitBtn.disabled = true;
 
-            // Formdaki verileri topla
             const formData = new FormData(contactForm);
 
-            // Verileri PHP dosyasına yolla (PHP dosyası ana dizinde olduğu için ../gonder.php)
             fetch('../gonder.php', {
                 method: 'POST',
                 body: formData
@@ -150,14 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 showToast('Bağlantı Hatası!', 'Lütfen internet bağlantınızı kontrol edin.', 'error');
             })
             .finally(() => {
-                // İşlem bitince butonu eski haline getir
                 submitBtn.innerText = originalBtnText;
                 submitBtn.disabled = false;
             });
         });
     }
 
-    // Bildirimi ekranda gösteren fonksiyon
     function showToast(title, message, type) {
         const toast = document.createElement('div');
         toast.classList.add('toast-notification');
@@ -174,9 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         document.body.appendChild(toast);
-
         setTimeout(() => { toast.classList.add('show'); }, 10);
-
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => { toast.remove(); }, 500);
@@ -194,14 +178,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         menuBtn.addEventListener('click', () => {
             menuOpen = !menuOpen;
-            
-            // Menüyü aç/kapat (.open class'ını ekler/çıkarır)
             mobileNav.classList.toggle('open', menuOpen);
-            
-            // Menü açıkken arka plandaki sitenin kaymasını (scroll) engelle
             document.body.style.overflow = menuOpen ? 'hidden' : '';
 
-            // Hamburger ikonunu animasyonlu bir "X" işaretine dönüştür
             const spans = menuBtn.querySelectorAll('span');
             if (menuOpen) {
                 spans[0].style.transform = 'translateY(8.5px) rotate(45deg)';
@@ -212,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Kullanıcı menüdeki bir linke tıkladığında menüyü otomatik kapat
         const mobileLinks = mobileNav.querySelectorAll('a');
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -229,26 +207,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // Projeleri JSON'dan Çekme ve Favori Mantığı
 const initDynamicProjects = async () => {
     const grid = document.getElementById('dynamic-project-grid');
-    if (!grid) return; // Eğer proje grid'i yoksa çalışmasın
+    if (!grid) return; 
 
     try {
-        // 1. JSON dosyasından veriyi oku
         const response = await fetch('../data.json'); 
         const projects = await response.json();
-        
-        // 2. LocalStorage'dan favorileri al (Yoksa boş dizi oluştur)
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-        // Ekrana projeleri basan fonksiyon
         const renderProjects = () => {
-            grid.innerHTML = ''; // Önce grid'i temizle
+            grid.innerHTML = ''; 
             
             projects.forEach(project => {
-                // Bu proje favorilerde var mı kontrol et
                 const isFavorited = favorites.includes(project.id);
                 const heartIcon = isFavorited ? '❤️' : '🤍';
                 
-                // Kart elementini oluştur
                 const card = document.createElement('div');
                 card.className = `project-card glass ${project.category}`;
                 card.setAttribute('data-category', project.category);
@@ -268,32 +240,54 @@ const initDynamicProjects = async () => {
                 grid.appendChild(card);
             });
 
-            // 3. Kalp butonlarına tıklama (Kullanıcı Etkileşimi ve LocalStorage)
             document.querySelectorAll('.fav-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const projectId = parseInt(btn.getAttribute('data-id'));
                     
                     if (favorites.includes(projectId)) {
-                        // Eğer zaten favoriyse, favorilerden çıkar
                         favorites = favorites.filter(id => id !== projectId);
                     } else {
-                        // Değilse favorilere ekle
                         favorites.push(projectId);
                     }
                     
-                    // LocalStorage'ı güncelle (Veri Saklama Mantığı)
                     localStorage.setItem('favorites', JSON.stringify(favorites));
-                    
-                    // Ekrandaki kalpleri güncellemek için yeniden render et
                     renderProjects();
                 });
             });
         };
 
-        renderProjects(); // İlk render'ı tetikle
+        renderProjects(); 
 
     } catch (error) {
         console.error("Projeler yüklenirken bir hata oluştu:", error);
         grid.innerHTML = '<p>Projeler yüklenemedi. Lütfen bağlantınızı kontrol edin.</p>';
     }
+};
+
+// Arama Kutusu Filtreleme
+const initSearch = () => {
+    const searchInput = document.getElementById('searchInput');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const projectCards = document.querySelectorAll('.project-card');
+
+        projectCards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            const desc = card.querySelector('p').innerText.toLowerCase();
+            
+            if (title.includes(searchTerm) || desc.includes(searchTerm)) {
+                card.style.display = 'block';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                }, 50);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.8)';
+                setTimeout(() => { card.style.display = 'none'; }, 400);
+            }
+        });
+    });
 };
