@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeler | L3xan</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
 </head>
 <body>
     <header>
@@ -17,14 +17,11 @@
                 <li><a href="project.html">Projeler</a></li>
                 <li><a href="contact.html">İletişim</a></li>
             </ul>
-
             <button class="theme-toggle" aria-label="Tema Değiştir">☀️</button>
-
             <button class="nav-menu-btn" aria-label="Menü">
                 <span></span><span></span><span></span>
             </button>
         </nav>
-
         <div class="mobile-nav">
             <a href="../index.html">Ana Sayfa</a>
             <a href="about.html">Hakkımda</a>
@@ -36,11 +33,9 @@
     <main class="container">
         <h2 class="section-title">Çalışmalarım</h2>
 
-        <!-- Proje Slider -->
         <div class="project-slider-container">
             <div class="project-slider glass">
                 <div class="slider-wrapper">
-                    <!-- Slide 1 -->
                     <div class="slide">
                         <div class="slide-image animate-bg"></div>
                         <div class="slide-content">
@@ -48,8 +43,6 @@
                             <p>Adobe Animate ile hazırlanmış profesyonel 2D karakter yürüme döngüsü animasyonu. Frame-by-frame tekniği kullanılarak akıcı ve gerçekçi hareket elde edildi.</p>
                         </div>
                     </div>
-
-                    <!-- Slide 2 -->
                     <div class="slide">
                         <div class="slide-image canva-bg"></div>
                         <div class="slide-content">
@@ -57,8 +50,6 @@
                             <p>Canva'da tasarlanmış detaylı turnuva duyuru posteri. Modern tipografi ve dinamik kompozisyon ile dikkat çekici bir tasarım oluşturuldu.</p>
                         </div>
                     </div>
-
-                    <!-- Slide 3 -->
                     <div class="slide">
                         <div class="slide-image logo-bg"></div>
                         <div class="slide-content">
@@ -66,8 +57,6 @@
                             <p>Modern minimalist vektörel logo tasarımı. Temiz çizgiler ve anlamlı semboller kullanarak unutulmaz bir marka kimliği yaratıldı.</p>
                         </div>
                     </div>
-
-                    <!-- Slide 4 -->
                     <div class="slide">
                         <div class="slide-image video-bg"></div>
                         <div class="slide-content">
@@ -76,12 +65,10 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="slider-controls">
                     <button class="slider-btn slider-prev">←</button>
                     <button class="slider-btn slider-next">→</button>
                 </div>
-
                 <div class="slider-dots">
                     <span class="dot active"></span>
                     <span class="dot"></span>
@@ -91,6 +78,10 @@
             </div>
         </div>
         
+        <div style="text-align: center; margin-bottom: 30px;">
+            <input type="text" id="searchInput" placeholder="Projelerde ara..." style="padding: 12px 25px; width: 100%; max-width: 400px; border-radius: 30px; border: 1px solid var(--primary-color); background: rgba(15, 20, 30, 0.4); color: var(--light-text); outline: none; backdrop-filter: blur(10px);">
+        </div>
+
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">Tümü</button>
             <button class="filter-btn" data-filter="animate">Adobe Animate</button>
@@ -99,38 +90,7 @@
         </div>
 
        <div class="project-grid" id="dynamic-project-grid">
-            <div class="project-card glass animate" data-category="animate">
-                <div class="project-img animate-bg"></div>
-                <div class="project-info">
-                    <h3>Karakter Animasyonu</h3>
-                    <p>Adobe Animate ile hazırlanmış 2D karakter yürüme döngüsü animasyonu.</p>
-                </div>
             </div>
-
-            <div class="project-card glass canva" data-category="canva">
-                <div class="project-img canva-bg"></div>
-                <div class="project-info">
-                    <h3>Espor Turnuva Afişi</h3>
-                    <p>Canva'da tasarlanmış detaylı turnuva duyuru posteri.</p>
-                </div>
-            </div>
-
-            <div class="project-card glass canva" data-category="canva">
-                <div class="project-img logo-bg"></div>
-                <div class="project-info">
-                    <h3>Marka Logosu</h3>
-                    <p>Modern minimalist vektörel logo tasarımı.</p>
-                </div>
-            </div>
-
-            <div class="project-card glass video" data-category="video">
-                <div class="project-img video-bg"></div>
-                <div class="project-info">
-                    <h3>Tanıtım Jeneriği</h3>
-                    <p>Canva video editörü kullanılarak hazırlanan kısa introm.</p>
-                </div>
-            </div>
-        </div>
     </main>
 
     <footer>
