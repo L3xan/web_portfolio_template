@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L3xan | Dijital Portfolyo</title>
-    <link rel="icon" type="image/png" href="assets/img/favicon.png">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Projeler | L3xan</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
-<body class="home-page">
-    <div class="animation-container"></div>
+<body>
     <header>
         <nav>
             <ul class="nav-links">
-                <li><a href="index.html">Ana Sayfa</a></li>
-                <li><a href="pages/about.html">Hakkımda</a></li>
-                <li><a href="pages/project.html">Projeler</a></li>
-                <li><a href="pages/contact.html">İletişim</a></li>
+                <li><a href="../index.html">Ana Sayfa</a></li>
+                <li><a href="about.html">Hakkımda</a></li>
+                <li><a href="project.html">Projeler</a></li>
+                <li><a href="contact.html">İletişim</a></li>
             </ul>
             <button class="theme-toggle" aria-label="Tema Değiştir">☀️</button>
             <button class="nav-menu-btn" aria-label="Menü">
@@ -25,18 +23,16 @@
             </button>
         </nav>
         <div class="mobile-nav">
-            <a href="index.html">Ana Sayfa</a>
-            <a href="pages/about.html">Hakkımda</a>
-            <a href="pages/project.html">Projeler</a>
-            <a href="pages/contact.html">İletişim</a>
+            <a href="../index.html">Ana Sayfa</a>
+            <a href="about.html">Hakkımda</a>
+            <a href="project.html">Projeler</a>
+            <a href="contact.html">İletişim</a>
         </div>
     </header>
 
-    <main class="hero">
-        <div class="hero-content">
-            <h1 class="animated-text">MERHABA, BEN ONUR</h1>
-            <p class="subtitle">Bilgisayar Programcılığı & Dijital Tasarımcı</p>
-            
+    <main class="container">
+        <h2 class="section-title">Çalışmalarım</h2>
+
         <div class="project-slider-container">
             <div class="project-slider glass">
                 <div class="slider-wrapper">
@@ -81,17 +77,26 @@
                 </div>
             </div>
         </div>
-            <div class="cta-buttons">
-                <a href="pages/project.html" class="btn primary-btn glass-btn">Projelerimi İncele</a>
-                <a href="pages/contact.html" class="btn secondary-btn glass-btn">Bana Ulaş</a>
-            </div>
+        
+        <div style="text-align: center; margin-bottom: 30px;">
+            <input type="text" id="searchInput" placeholder="Projelerde ara..." style="padding: 12px 25px; width: 100%; max-width: 400px; border-radius: 30px; border: 1px solid var(--primary-color); background: rgba(15, 20, 30, 0.4); color: var(--light-text); outline: none; backdrop-filter: blur(10px);">
         </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Tümü</button>
+            <button class="filter-btn" data-filter="animate">Adobe Animate</button>
+            <button class="filter-btn" data-filter="canva">Canva Tasarımları</button>
+            <button class="filter-btn" data-filter="video">Videolar</button>
+        </div>
+
+       <div class="project-grid" id="dynamic-project-grid">
+            </div>
     </main>
 
     <footer>
         <p>&copy; 2026 L3xan. Tüm hakları saklıdır.</p>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>
